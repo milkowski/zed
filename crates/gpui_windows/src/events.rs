@@ -918,8 +918,8 @@ impl WindowsWindowInner {
         let dpi = unsafe { GetDpiForWindow(handle) };
         // We do not use the OS title bar, so the default `DefWindowProcW` will only register a 1px edge for resizes
         // We need to calculate the frame thickness ourselves and do the hit test manually.
-        let frame_y = get_frame_thicknessx(dpi);
-        let frame_x = get_frame_thicknessy(dpi);
+        let frame_x = get_frame_thicknessx(dpi);
+        let frame_y = get_frame_thicknessy(dpi);
         let mut cursor_point = POINT {
             x: lparam.signed_loword().into(),
             y: lparam.signed_hiword().into(),
@@ -1652,7 +1652,7 @@ fn get_frame_thicknessx(dpi: u32) -> i32 {
 
 fn get_frame_thicknessy(dpi: u32) -> i32 {
     let resize_frame_thickness = unsafe { GetSystemMetricsForDpi(SM_CYSIZEFRAME, dpi) };
-    let padding_thickness = unsafe { GetSystemMetricsForDpi(SM_CXPADDEDBORDER, dpi) };
+    let padding_thickness = unsafe { GetSystemMetricsForDpi(SM_CYPADDEDBORDER, dpi) };
     resize_frame_thickness + padding_thickness
 }
 
