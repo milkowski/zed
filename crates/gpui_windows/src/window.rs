@@ -627,6 +627,18 @@ impl PlatformWindow for WindowsWindow {
             .detach();
     }
 
+    fn start_window_move(&self) {
+        unsafe {
+            SendMessageW(
+                self.0.hwnd,
+                WM_SYSCOMMAND,
+                WPARAM(SC_MOVE.0 | HTCAPTION as u32),
+                LPARAM(0),
+            )
+            .log_err();
+        }
+    }
+
     fn scale_factor(&self) -> f32 {
         self.state.scale_factor.get()
     }
